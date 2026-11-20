@@ -1,0 +1,14 @@
+{
+  "nome": "IA sem censura pronta",
+  "tipo": "sem-censura",
+  "modelo": "huihui_ai/Qwen3.8-abliterated:27b",
+  "ram_recomendada_gb": 32,
+  "porta_runtime": 11542,
+  "contexto": 2048,
+  "max_tokens": 512,
+  "temperatura": 0.2,
+  "keep_alive": "120s",
+  "sistema": "Responda em português. Seja direto. Se não souber, diga que não sabe. Não invente fatos ou resultados de ações que você não executou.",
+  "digest_esperado": "bdc5e13cd1645bc409e95a7d9e864dc3ce3e5fe5beeb24a43c193e8041edd3e0",
+  "desativar_pensamento": true
+}

@@ -1,0 +1,3 @@
+DOCUMENTO FICTÍCIO PARA TESTE
+Uma oficina inventada chamada Oficina Azul atendeu 12 clientes na segunda e 8 na terça. Cada atendimento custou 50 reais. Resuma os atendimentos e calcule o faturamento total.
+Gabarito humano: 20 atendimentos, faturamento de 1000 reais.

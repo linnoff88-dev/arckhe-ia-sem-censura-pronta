@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IA sin censura lista — prepara el modelo y conversa de verdad</title>
+<meta name="description" content="El kit IA sin censura lista ya define el modelo con menos rechazos y cómo ejecutarlo. Descargas los pesos, abres la conversación y controlas cuándo termina el proceso.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/ia-sem-censura-pronta/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/ia-sem-censura-pronta/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/ia-sem-censura-pronta/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(226,162,59,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:1100px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;height:auto;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+</head>
+<body><nav><div class="wrap"><a class="brand" href="#top">🔓 IA sin censura lista</a><span class="sep">|</span><span class="clubpro"><a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a><span class="sep">-</span><a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a></span><div class="links"><a class="sec" href="#entrega">Qué ofrece</a><a class="sec" href="#prova">Pruebas reales</a><a class="sec" href="#tecnico">Kit (técnico)</a><span class="lang"><a href="../">PT</a><a href="../en/">EN</a><a class="on" href="./">ES</a></span><button class="tgl" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌙</button><a class="btn" href="https://github.com/inematds/ia-sem-censura-pronta">GitHub</a></div></div></nav>
+<header class="hero" id="top"><div class="wrap"><div><h1>Haz que tu IA responda con menos restricciones.</h1><p class="lead">El kit IA sin censura lista ya define el modelo con menos rechazos y cómo ejecutarlo. Descargas los pesos, abres la conversación y controlas cuándo termina el proceso.</p><div class="cta"><a class="btn" href="#entrega">Entender el kit</a><a class="btn ghost" href="#prova">Ver la prueba real</a></div></div><figure><img src="../assets/banner-es.jpg" width="1400" height="788" alt="IA sin censura lista: prepara, conversa y cierra el modelo en tu máquina"></figure></div></header>
+<section class="resumo" id="resumo"><div class="wrap"><h2>En resumen</h2><p>Este kit gratuito ejecuta un modelo publicado como abliterated: una versión modificada para tener menos rechazos. Sirve para quienes quieren probar este tipo de modelo en funcionamiento, con conversación y lectura de texto. El modelo se ejecuta en la máquina donde se instala el kit, sin una API externa de inferencia. Necesitas Python, Ollama y suficiente memoria. Menos rechazos no garantiza que acepte todas las solicitudes ni que todas las respuestas sean correctas.</p><figure style="margin:24px 0 0"><img src="../assets/banner-grade-es.jpg" alt="Los pasos prácticos del kit" width="1400" height="788" style="width:100%;height:auto;border-radius:14px" loading="lazy"></figure></div></section>
+<section id="video"><div class="wrap"><h2>Entiéndelo en 3 minutos</h2><div style="position:relative;aspect-ratio:16/9;width:100%"><iframe src="https://www.youtube.com/embed/TJ9omYZdIrE" title="Entiéndelo en 3 minutos" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen></iframe></div><p class="sub">Audio en portugués. Demostración de los dos kits, con resultados reales y sus limitaciones. <a href="https://www.youtube.com/watch?v=TJ9omYZdIrE" target="_blank" rel="noopener">Ver en YouTube</a></p></div></section>
+<section id="entrega"><div class="wrap"><h2>Terminas conversando con el modelo</h2><p class="sub">El programa ejecuta el modelo, mantiene un contexto breve de conversación y muestra la respuesta en la terminal. La terminal es la ventana donde escribes comandos y lees el resultado.</p><div class="grid g3"><article class="card"><h3>Prepara</h3><p>El kit comprueba el runtime Ollama y descarga los pesos, que son los archivos del modelo. Esta preparación necesita internet.</p></article><article class="card"><h3>Conversa</h3><p>Escribe tu pregunta o proporciona un archivo de texto. La respuesta se genera en la máquina donde está instalado el kit.</p></article><article class="card"><h3>Termina</h3><p>Al salir, el kit descarga su modelo de la memoria y cierra su propia instancia. No detiene Ollama de otros proyectos.</p></article></div><p>El kit es código ejecutable, con lanzador, perfil de modelo y una prueba real. No es una ficha de decisión. La conversación aparece en la terminal; esta versión no incluye una aplicación de chat en el navegador.</p></div></section>
+<section id="diferenca"><div class="wrap"><h2>La privacidad y los menos rechazos son cosas distintas</h2><div class="grid g2"><article class="card"><h3>IA privada</h3><p>Se refiere a quién recibe los datos. El kit privado procesa en el ordenador y ofrece una ejecución Linux sin interfaz para salir a internet. El modelo todavía puede rechazar solicitudes.</p></article><article class="card"><h3>IA sin censura</h3><p>Se refiere a las restricciones de respuesta. El kit usa una versión abliterated identificada por el nombre y el digest de los pesos. También se ejecuta localmente; menos rechazos no garantizan privacidad ni calidad.</p></article></div><p>Estás en <strong>IA sin censura lista</strong>. El otro kit está en <a href="https://inematds.github.io/ia-privada-pronta/guia/">IA privada lista</a>. Son dos productos con objetivos propios.</p></div></section>
+<section id="prova"><div class="wrap"><h2>Qué ocurrió en la prueba real</h2><p class="sub">Se ejecutó en Linux el 15/11/2026, con el modelo real, de uno en uno. Los modelos se descargaron de la memoria al terminar. Estos resultados corresponden a los casos descritos; no son una clasificación general.</p><div class="phase"><span class="tag">Ejecución</span><div class="d"><strong>El modelo real respondió sin red externa</strong><span>El proceso solo tenía la interfaz de red local lo.</span></div></div><div class="phase"><span class="tag">Suma breve</span><div class="d"><strong>17 + 25 → 42</strong><span>La verificación ejecutable recibió la respuesta esperada.</span></div></div><div class="phase"><span class="tag">Conversación</span><div class="d"><strong>Recordó LARANJA</strong><span>El modelo recuperó la palabra clave en un segundo mensaje.</span></div></div><div class="phase"><span class="tag">Documento</span><div class="d"><strong>Respuesta: 1000 / esperado: 1000</strong><span>El modelo acertó este ejercicio ficticio. Un caso correcto no mide toda la capacidad del modelo.</span></div></div><div class="phase"><span class="tag">Cierre</span><div class="d"><strong>Modelo descargado de la memoria y proceso cerrado</strong><span>El puerto de la instancia propia se cerró después de la prueba.</span></div></div><p>Además, las 14 pruebas de software pasaron. Comprueban el puerto ocupado, la ausencia del modelo, la nube, las redirecciones, las respuestas vacías y el ciclo de vida del proceso con un servidor simulado. La prueba con el modelo real se registra por separado.</p><p><a href="../../verificacao/STATUS.md">Estado completo de la validación</a> · <a href="../../verificacao/prova-real-linux.json">Comprobante real en JSON</a></p></div></section>
+<section id="nuvem"><div class="wrap"><h2>¿Tiene que estar en tu ordenador?</h2><p>Un modelo con menos rechazos puede ejecutarse en tu ordenador, en un servidor propio o en un servicio externo. Quién ejecuta el modelo y qué restricciones tiene son decisiones distintas.</p><p>En estos kits, el modelo se ejecuta en la máquina donde instalas el código. También puedes instalar el código en un servidor propio y usarlo desde la terminal por SSH, una conexión remota protegida. En ese caso, el contenido pasa a estar en ese servidor y hay que tener en cuenta la confianza en quien lo administra y los controles de acceso. Esta implementación en la nube no se probó en esta entrega.</p><p>No hay integración lista con proveedores externos de inferencia. La configuración mantiene el servicio vinculado a la dirección local de la propia máquina. El sitio público es solo la guía; esta página no envía tus preguntas.</p></div></section>
+<div id="tecnico" class="techhead" style="background:var(--bg2);border-top:1px solid var(--amb);padding:48px 0"><div class="wrap"><h2>El kit: instalar y conversar</h2><p>No necesitas esta parte para entender lo anterior.</p></div></div><div class="techzone" style="background:var(--bg2)"><section id="guia"><div class="wrap"><h2>De la descarga a la primera respuesta</h2><p class="sub">Modelo predeterminado: huihui_ai/Qwen3.8-abliterated:27b. Pesos de aproximadamente 18 GB; se recomiendan 32 GB de RAM. La memoria de trabajo supera el tamaño de los pesos y depende del runtime. La conversación tiene un contexto breve de 2048 unidades de texto, llamadas tokens. No hay dependencias adicionales de Python.</p>
+<h3>Términos técnicos</h3><p><strong>Runtime</strong> es el programa que ejecuta el modelo; aquí es Ollama. <strong>Digest</strong> es la identificación exacta de los archivos del modelo, que se usa para detectar un cambio de versión. <strong>Abliterated</strong> es una versión modificada para reducir las negativas. <strong>Espacio de nombres de red</strong> es la función de Linux que da al proceso su propia red separada. Si el modo sin conexión muestra un error de permisos, tu Linux no habilitó esta función: usa el modo local normal, sin afirmar que hubo aislamiento, o pide al administrador que habilite los espacios de nombres de usuario.</p><div class="step"><span class="b">1</span><div><h3>Prepara el ordenador</h3><p>Instala <a href="https://www.python.org/downloads/">Python 3.10 o superior</a>, <a href="https://ollama.com/download">Ollama</a> y, para clonar, <a href="https://git-scm.com/downloads">Git</a>. También puedes <a href="https://github.com/inematds/ia-sem-censura-pronta/archive/refs/heads/main.zip">descargar el ZIP y extraer la carpeta</a>, sin Git. En Windows, marca la opción para añadir Python al PATH, que permite invocarlo desde la terminal. Después de instalar, abre una terminal nueva.</p><pre>python3 --version
+ollama --version</pre><p>En Windows, si hace falta, sustituye python3 por py. En Ubuntu, puedes instalar Python y Git con:</p><pre>sudo apt update
+sudo apt install python3 git</pre></div></div>
+<div class="step"><span class="b">2</span><div><h3>Descarga el kit y los pesos</h3><p><strong>Con Git:</strong> usa este método si instalaste Git.</p><pre>git clone https://github.com/inematds/ia-sem-censura-pronta.git
+cd ia-sem-censura-pronta
+python3 ia.py diagnostico
+python3 ia.py preparar</pre><p><strong>Descargué el ZIP:</strong> extrae el archivo. En Windows, abre la carpeta que contiene ia.py, haz clic en la barra de direcciones, escribe powershell y presiona Enter. En Linux/macOS, abre Terminal y entra en la carpeta extraída con cd; si guardaste el ZIP en Downloads, usa el ejemplo de abajo. Si lo guardaste en otro lugar, ajusta solo la ruta de la carpeta.</p><pre>cd ~/Downloads/ia-sem-censura-pronta-main
+python3 ia.py diagnostico
+python3 ia.py preparar</pre><p>En Windows, una vez dentro de la carpeta en PowerShell, ejecuta solo los dos comandos de Python, usando py si es necesario. También puedes abrir preparar.cmd y luego conversar.cmd con doble clic. No ejecutes git clone si elegiste el ZIP.</p><p>La preparación descarga o verifica los archivos del modelo. Si cambia la identificación de los pesos, el kit muestra el digest esperado y el encontrado. Comprueba el modelo en la página oficial de la etiqueta; solo entonces, si decides aceptar la nueva versión, edita digest_esperado en perfil.json con la identificación encontrada. Si no puedes confirmar el cambio, conserva el valor y no continúes con los pesos diferentes.</p></div></div><div class="step"><span class="b">3</span><div><h3>Verifica y abre la conversación</h3><pre>python3 ia.py verificar
+python3 ia.py conversar</pre><p>La prueba debe responder 42 a la suma 17 + 25. Durante la conversación, escribe /limpar para reiniciar el contexto y /sair para terminar. El kit mantiene en memoria unos pocos mensajes recientes y no guarda el historial.</p></div></div>
+<div class="step"><span class="b">4</span><div><h3>Linux: bloquea la red del proceso</h3><p>Prepara primero los pesos. El ordenador sigue conectado para los demás programas; solo se aísla la red del kit.</p><pre>sudo apt install bubblewrap iproute2
+bash sem-rede.sh verificar
+bash sem-rede.sh conversar</pre><p>Este modo requiere que el sistema permita los espacios de nombres de usuario. La red aislada solo contiene la interfaz local lo. Aísla la red, no los archivos. En macOS/Windows, usa el modo local normal y comprueba manualmente, sin Wi-Fi ni cable, después de preparar el modelo; esta entrega no se probó en esos sistemas.</p></div></div>
+<div class="step"><span class="b">5</span><div><h3>Usa un archivo de texto</h3><pre>python3 ia.py perguntar --arquivo exemplos/primeiro-pedido.txt</pre><p>Las respuestas son texto; los comandos que sugiera la IA no se ejecutan. Para documentos largos, envía fragmentos más pequeños. Para cálculos, compara con una referencia externa.</p></div></div>
+<h3>Lo que el kit no promete</h3><p>No garantiza respuestas correctas ni que acepte cualquier solicitud. La protección de este flujo no cubre malware, administradores del ordenador, grabaciones de pantalla, copias de seguridad ni componentes comprometidos. La instalación no incluye interfaz gráfica, voz ni agentes que ejecuten herramientas. El código y los mensajes del kit están en portugués.</p><p><a href="https://docs.ollama.com/faq">Documentación técnica de Ollama</a> · <a href="../../README.md">README completo</a></p></div></section></div>
+<footer><div class="wrap"><p>IA sin censura lista · v1.0.0 · INEMA</p><a href="https://github.com/inematds/ia-sem-censura-pronta">Código y materiales</a> · <a href="https://inema.club">INEMA.CLUB</a> · <a href="https://inema.pro">INEMA.PRO</a></div></footer><script>const kitTheme=document.getElementById('themeToggle');try{if(localStorage.getItem('inema-kit-theme')==='light')document.body.classList.add('light')}catch{}function updateTheme(){kitTheme.textContent=document.body.classList.contains('light')?'☀️':'🌙'}updateTheme();kitTheme.addEventListener('click',()=>{document.body.classList.toggle('light');try{localStorage.setItem('inema-kit-theme',document.body.classList.contains('light')?'light':'dark')}catch{}updateTheme()});</script></body></html>

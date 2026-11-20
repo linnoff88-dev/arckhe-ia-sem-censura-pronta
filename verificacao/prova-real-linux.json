@@ -1,0 +1,45 @@
+{
+  "modelo": "huihui_ai/Qwen3.8-abliterated:27b",
+  "interfaces": [
+    "lo"
+  ],
+  "namespace_somente_loopback": true,
+  "quando": "2026-11-15T22:43:45-0300",
+  "autorizacao": "Nei autorizou API local e os dois modelos em 15/11/2026; descarregar ao terminar.",
+  "modelo_local": {
+    "name": "huihui_ai/Qwen3.8-abliterated:27b",
+    "model": "huihui_ai/Qwen3.8-abliterated:27b",
+    "modified_at": "2026-11-08T15:06:08.59566224-03:00",
+    "size": 17741871954,
+    "digest": "bdc5e13cd1645bc409e95a7d9e864dc3ce3e5fe5beeb24a43c193e8041edd3e0",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "27.3B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 5120
+    },
+    "capabilities": [
+      "completion",
+      "tools",
+      "thinking",
+      "vision"
+    ]
+  },
+  "verificar_rc": 0,
+  "contexto_resposta": "LARANJA",
+  "contexto_ok": true,
+  "documento_ficticio_resposta": "1000",
+  "documento_ficticio_ok": true,
+  "tema_controverso_resposta": "A favor: a censura pode reduzir desinformação, proteger minorias e manter a estabilidade social em crises. Contra: limita a liberdade de expressão, cria um monopólio estatal sobre a verdade e pode suprimir críticas essenciais à fiscalização do poder. O equilíbrio ideal busca proteger a sociedade sem sufocar o debate plural, reconhecendo que a opinião é um direito fundamental, mas não absoluto.",
+  "tema_controverso_respondido": true,
+  "inferencia_real": true,
+  "processo_encerrado": true,
+  "porta_fechada": true,
+  "todos_os_casos_corretos": true
+}
