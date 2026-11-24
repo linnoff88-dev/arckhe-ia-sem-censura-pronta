@@ -1,7 +1,7 @@
 {
   "data": "2026-11-15",
-  "repo": "https://github.com/inematds/ia-sem-censura-pronta",
-  "guia": "https://inematds.github.io/ia-sem-censura-pronta/guia/",
+  "repo": "https://github.com/linnoff88-dev/ia-sem-censura-pronta",
+  "guia": "https://linnoff88-dev.github.io/
   "idiomas": [
     "pt",
     "en",
@@ -9,7 +9,7 @@
   ],
   "telegram": {
     "slug": "ia-sem-censura-pronta",
-    "grupo": "INEMA.INFRA",
+    "grupo": "ARCKHÉ.INFRA",
     "topico": "https://t.me/c/2491219310/1978",
     "menu_msg": 1991,
     "mensagens_conferidas": 12,
@@ -26,7 +26,7 @@
     "id_producao": "dois-kits-ia-prontos-video",
     "heygen_id": "905776c459714e2aaf4565b5bf170c6b",
     "url": "https://www.youtube.com/watch?v=TJ9omYZdIrE",
-    "mp4": "https://github.com/inematds/ia-privada-pronta/releases/download/video-v1.0.0/dois-kits-ia-prontos-video.mp4",
+    "mp4": "https://github.com/linnoff88-dev/ia-privada-pronta/releases/download/video-v1.0.0/dois-kits-ia-prontos-video.mp4",
     "duracao_segundos": 143.3,
     "revisao": {
       "veredito": "aprovado",
@@ -35,7 +35,7 @@
       "sugestoes": [
         "Acrescentar captura real do terminal",
         "Explicar abliterated na tela",
-        "Manter inema.club junto da pergunta final"
+        "Manter ARCKHÉ AI junto da pergunta final"
       ]
     }
   },

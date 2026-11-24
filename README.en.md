@@ -1,12 +1,12 @@
 # Uncensored AI, ready to use
 
-[![Uncensored AI, ready to use](guia/assets/banner-en.jpg)](https://inematds.github.io/ia-sem-censura-pronta/guia/en/)
+[![Uncensored AI, ready to use](guia/assets/banner-en.jpg)](https://linnoff88-dev.github.io/
 
 **🇧🇷 [Português](../../README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](../es/README.md)**
 
 [🎬 Video: talk to your AI without internet (audio in Portuguese).](https://www.youtube.com/watch?v=TJ9omYZdIrE)
 
-Full guide: https://inematds.github.io/ia-sem-censura-pronta/guia/en/
+Full guide: https://linnoff88-dev.github.io/
 
 **Real Linux validation:** execution without an external network, a contextual conversation, and shutdown of the dedicated processes were confirmed. All 14 software tests passed. The model answered correctly on two tested cases, got the private-kit account wrong (answer: 600; expected: 1000), and answered the debate topic. These results do not measure its overall quality. See [the complete results](../../verificacao/STATUS.md).
 
@@ -20,7 +20,7 @@ This kit runs an abliterated model for you to chat with on your own computer: a 
 
 ## Requirements
 
-- Git to clone, or [download the ZIP](https://github.com/inematds/ia-sem-censura-pronta/archive/refs/heads/main.zip) and extract the folder.
+- Git to clone, or [download the ZIP](https://github.com/linnoff88-dev/ia-sem-censura-pronta/archive/refs/heads/main.zip) and extract the folder.
 - Python 3.10 or newer: [official installer](https://www.python.org/downloads/).
 - [Ollama installed](https://ollama.com/download), on Linux, macOS, or Windows.
 - For the default model: approximately **18 GB to download**, **32 GB RAM recommended**, free space for the weights, and resources for the system. Default context: 2048; actual memory use depends on the runtime. A GPU is optional: CPU works, with different performance.
@@ -38,7 +38,7 @@ On Windows, use `py` instead of `python3` if needed. After installing Python or 
 ## Install and chat
 
 ```bash
-git clone https://github.com/inematds/ia-sem-censura-pronta.git
+git clone https://github.com/linnoff88-dev/ia-sem-censura-pronta.git
 cd ia-sem-censura-pronta
 python3 ia.py diagnostico
 python3 ia.py preparar
