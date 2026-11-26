@@ -80,7 +80,7 @@ class KitTests(unittest.TestCase):
     def test_http_proxy_ignored(self):
         with patch.dict(os.environ,{'HTTP_PROXY':'http://127.0.0.1:1','http_proxy':'http://127.0.0.1:1','NO_PROXY':'','no_proxy':''}):
             rt=ia.Runtime(self.cfg);self.assertEqual(rt.request('/api/version')['version'],'test')
-    @unittest.skipUnless(os.name=='posix', 'integração de processo POSIX')
+    @unittest.skipUnless(os.name=='posix', 'integraçêo de processo POSIX')
     def test_owned_runtime_starts_answers_and_stops(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:

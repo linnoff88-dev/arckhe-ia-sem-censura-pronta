@@ -67,7 +67,7 @@ On macOS/Windows, local conversation works through `ia.py`; the offline launcher
 ## Single question and file
 
 ```bash
-python3 ia.py perguntar "Escreva três ideias para organizar uma reunião curta."
+python3 ia.py perguntar "Escreva três ideias para organizar uma reuniêo curta."
 python3 ia.py perguntar --arquivo exemplos/primeiro-pedido.txt
 ```
 

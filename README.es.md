@@ -67,7 +67,7 @@ En macOS/Windows, la conversación local funciona con `ia.py`; el lanzador sin r
 ## Pregunta única y archivo
 
 ```bash
-python3 ia.py perguntar "Escreva três ideias para organizar uma reunião curta."
+python3 ia.py perguntar "Escreva três ideias para organizar uma reuniêo curta."
 python3 ia.py perguntar --arquivo exemplos/primeiro-pedido.txt
 ```
 

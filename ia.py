@@ -23,18 +23,18 @@ class KitError(Exception):
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
-        raise KitError('O runtime tentou redirecionar a conexão. Operação interrompida.')
+        raise KitError('O runtime tentou redirecionar a conexêo. Operaçêo interrompida.')
 
 def profile():
     try:
         cfg = json.loads((ROOT / 'perfil.json').read_text(encoding='utf-8'))
     except (OSError, ValueError) as exc:
-        raise KitError('Não foi possível ler perfil.json: ' + str(exc)) from exc
+        raise KitError('Nêo foi possível ler perfil.json: ' + str(exc)) from exc
     name = cfg.get('modelo', '')
     if not re.fullmatch(r'[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)?(?::[A-Za-z0-9_.-]+)?', name):
         raise KitError('Nome de modelo inválido. Use nome local, nunca URL.')
     if 'cloud' in name.lower():
-        raise KitError('Modelos cloud não são aceitos por este kit.')
+        raise KitError('Modelos cloud nêo sêo aceitos por este kit.')
     if type(cfg.get('porta_runtime')) is not int or not 1024 <= cfg['porta_runtime'] <= 65535:
         raise KitError('porta_runtime precisa ser um inteiro entre1024 e65535.')
     if type(cfg.get('contexto')) is not int or not 512 <= cfg['contexto'] <= 8192:
@@ -48,7 +48,7 @@ def free_port(port):
         try:
             s.bind(('127.0.0.1', port))
         except OSError as exc:
-            raise KitError(f'Porta {port} ocupada. Encerre a outra execução deste kit; não vamos usar um serviço desconhecido.') from exc
+            raise KitError(f'Porta {port} ocupada. Encerre a outra execuçêo deste kit; nêo vamos usar um serviço desconhecido.') from exc
 
 def stop_process(process):
     if process is None:
@@ -84,7 +84,7 @@ class Runtime:
 
     def request(self, path, data=None, timeout=30):
         if path not in ('/api/version', '/api/tags', '/api/show', '/api/chat', '/api/generate'):
-            raise KitError('Rota não permitida.')
+            raise KitError('Rota nêo permitida.')
         body = None if data is None else json.dumps(data, ensure_ascii=False).encode('utf-8')
         req = urllib.request.Request(self.base + path, data=body, headers={'Content-Type':'application/json'})
         try:
@@ -96,11 +96,11 @@ class Runtime:
         except urllib.error.HTTPError as exc:
             raise KitError(f'Ollama retornou HTTP{exc.code}. Consulte .estado/runtime.log.') from exc
         except (urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
-            raise KitError('Não foi possível conversar com o runtime local: ' + str(exc)) from exc
+            raise KitError('Nêo foi possível conversar com o runtime local: ' + str(exc)) from exc
 
     def __enter__(self):
         if not self.binary:
-            raise KitError('Ollama não encontrado. Instale pelo https://ollama.com/download e abra um novo terminal.')
+            raise KitError('Ollama nêo encontrado. Instale pelo https://ollama.com/download e abra um novo terminal.')
         free_port(self.cfg['porta_runtime'])
         state = ROOT / '.estado'
         state.mkdir(mode=0o700, exist_ok=True)
@@ -115,15 +115,15 @@ class Runtime:
             deadline = time.monotonic() + 30
             while time.monotonic() < deadline:
                 if self.process.poll() is not None:
-                    raise KitError('Runtime não iniciou. Consulte .estado/runtime.log.')
+                    raise KitError('Runtime nêo iniciou. Consulte .estado/runtime.log.')
                 try:
                     self.request('/api/version', timeout=1)
                     if self.process.poll() is not None:
-                        raise KitError('A instância própria encerrou durante a inicialização.')
+                        raise KitError('A instância própria encerrou durante a inicializaçêo.')
                     return self
                 except KitError:
                     time.sleep(0.2)
-            raise KitError('O runtime não ficou pronto em30s. Consulte .estado/runtime.log.')
+            raise KitError('O runtime nêo ficou pronto em30s. Consulte .estado/runtime.log.')
         except BaseException:
             self.__exit__(None, None, None)
             raise
@@ -139,16 +139,16 @@ class Runtime:
         tags = self.request('/api/tags').get('models', [])
         found = next((m for m in tags if m.get('name') == selected or m.get('model') == selected), None)
         if not found:
-            raise KitError(f'Modelo {selected} ainda não foi preparado. Execute: python3 ia.py preparar')
+            raise KitError(f'Modelo {selected} ainda nêo foi preparado. Execute: python3 ia.py preparar')
         meta = self.request('/api/show', {'model': selected})
         if meta.get('remote_host') or meta.get('remote_model') or found.get('remote_host'):
             raise KitError('Este modelo aponta para processamento remoto. O kit exige pesos locais.')
         if not isinstance(found.get('size'), int) or found['size'] <= 0:
-            raise KitError('O modelo não apresenta tamanho local válido.')
+            raise KitError('O modelo nêo apresenta tamanho local válido.')
         expected = self.cfg.get('digest_esperado')
         actual = str(found.get('digest', '')).removeprefix('sha256:')
         if expected and actual != expected:
-            raise KitError(f'O modelo mudou de digest. Esperado: {expected}. Encontrado: {actual}. Confira a página oficial do modelo antes de decidir atualizar digest_esperado em perfil.json; se não puder confirmar, não prossiga.')
+            raise KitError(f'O modelo mudou de digest. Esperado: {expected}. Encontrado: {actual}. Confira a página oficial do modelo antes de decidir atualizar digest_esperado em perfil.json; se nêo puder confirmar, nêo prossiga.')
         return found
 
     def prepare(self):
@@ -156,7 +156,7 @@ class Runtime:
         try:
             subprocess.run([self.binary, 'pull', self.cfg['modelo']], env=self.env, check=True, timeout=3600)
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
-            raise KitError('Preparação interrompida. Confira internet e espaço em disco; rode preparar novamente.') from exc
+            raise KitError('Preparaçêo interrompida. Confira internet e espaço em disco; rode preparar novamente.') from exc
         info = self.ensure_model()
         print('Modelo local preparado. Digest:', info.get('digest'))
 
@@ -170,11 +170,11 @@ class Runtime:
         }, timeout=600)
         text = response.get('message', {}).get('content')
         if not isinstance(text, str) or not text.strip():
-            raise KitError('O modelo não devolveu resposta de texto. Não vamos tratar saída vazia como sucesso.')
+            raise KitError('O modelo nêo devolveu resposta de texto. Nêo vamos tratar saída vazia como sucesso.')
         return text.strip(), response
 
     def unload(self):
-        # A ausência de prompt solicita somente descarregar o modelo, não gera outra resposta.
+        # A ausência de prompt solicita somente descarregar o modelo, nêo gera outra resposta.
         with contextlib.suppress(KitError):
             self.request('/api/generate', {'model':self.cfg['modelo'], 'keep_alive':0}, timeout=30)
 
@@ -189,7 +189,7 @@ def get_question(args):
     else:
         data = sys.stdin.read()
     if not data.strip():
-        raise KitError('Digite uma pergunta, use --arquivo ou forneça texto pela entrada padrão.')
+        raise KitError('Digite uma pergunta, use --arquivo ou forneça texto pela entrada padrêo.')
     if len(data) > 12000:
         raise KitError('Entrada acima de12000caracteres. Envie um trecho menor para o contexto configurado.')
     return data
@@ -206,7 +206,7 @@ def verify(rt):
                'interfaces_rede':[name for _,name in socket.if_nameindex()],
                'namespace_somente_loopback':set(name for _,name in socket.if_nameindex())=={'lo'},
                'tokens_gerados':raw.get('eval_count'), 'inferencia_real':True,
-               'limite':'Confirma este caso de resposta local; não é auditoria do sistema operacional nem prova de ausência de recusas.'}
+               'limite':'Confirma este caso de resposta local; nêo é auditoria do sistema operacional nem prova de ausência de recusas.'}
     dest = ROOT / '.estado/verificacao.json'
     dest.write_text(json.dumps(receipt, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(receipt, ensure_ascii=False, indent=2))
@@ -217,7 +217,7 @@ def main(argv=None):
     ap.add_argument('--versao', action='version', version=VERSION)
     sub = ap.add_subparsers(dest='comando', required=True)
     sub.add_parser('diagnostico', help='confere requisitos sem carregar modelo')
-    sub.add_parser('preparar', help='baixa os pesos pela internet; não conversa com modelo')
+    sub.add_parser('preparar', help='baixa os pesos pela internet; nêo conversa com modelo')
     sub.add_parser('conversar', help='abre conversa no terminal; /sair encerra')
     sub.add_parser('verificar', help='executa pergunta real e salva recibo local')
     ask = sub.add_parser('perguntar', help='responde uma pergunta real')
